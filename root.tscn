@@ -2,15 +2,107 @@
 
 [ext_resource type="PackedScene" uid="uid://c1m7poieklk0l" path="res://xr_origin_3d.tscn" id="1_pq8q7"]
 [ext_resource type="Script" uid="uid://djbyq4hgv42x" path="res://root.gd" id="1_pyidc"]
+[ext_resource type="Texture2D" uid="uid://byxdisbjgh246" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_blue_512x512.png" id="2_jnlp7"]
+[ext_resource type="Texture2D" uid="uid://dvitlnotr17rl" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_black_512x512.png" id="3_l8v81"]
+[ext_resource type="Texture2D" uid="uid://ves7nrb7s12l" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_orange_512x512.png" id="4_bf3um"]
+[ext_resource type="Texture2D" uid="uid://bk34mqvc8783y" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_cyan_512x512.png" id="4_vyht1"]
+[ext_resource type="Texture2D" uid="uid://8shts1bjkobj" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_lime_512x512.png" id="6_huihk"]
+[ext_resource type="Script" uid="uid://i3ccd5nyxk48" path="res://enemy.gd" id="8_bf3um"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pyidc"]
+albedo_texture = ExtResource("2_jnlp7")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jr2fm"]
+albedo_texture = ExtResource("3_l8v81")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tw3kd"]
+albedo_texture = ExtResource("4_bf3um")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4kqy0"]
+albedo_texture = ExtResource("4_vyht1")
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_triplanar = true
+uv2_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_huihk"]
+albedo_texture = ExtResource("6_huihk")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bf3um"]
+albedo_texture = ExtResource("3_l8v81")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jr2fm"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_huihk"]
+points = PackedVector3Array(-0.12520654, -0.532801, -0.4805069, 0.022783129, 0.4760704, 0.49888408, 0.16971254, 0.5591441, 0.46417162, 0.23105091, -0.8035912, 0.32045516, 0.40741014, 0.651043, -0.24352328, -0.4827893, 0.59484255, 0.082213186, -0.3628679, -0.68231165, 0.2896967, 0.46904355, -0.65452886, -0.06627126, -0.12744367, 0.8427015, -0.33810276, -0.39343542, -0.6839421, -0.24471663, 0.43825462, 0.62330925, 0.20084947, 0.0841477, 0.977454, 0.11479468, -0.06820232, -0.9764576, -0.12927033, 0.20054972, -0.56312895, -0.4514544, -0.18552664, 0.59545326, -0.4534751, -0.27336287, 0.59226835, 0.40775412, -0.0069364863, -0.47682306, 0.49966025, 0.37582088, -0.5886136, 0.31695515, 0.111579016, 0.5630594, -0.48117727, -0.41725034, 0.5278656, -0.27049688, -0.48454633, -0.59697217, -0.06650971, -0.27974695, 0.90856135, 0.05333608, -0.25019687, -0.8807117, 0.20531891, 0.263647, -0.90277094, -0.1273943, 0.29336792, 0.8715263, -0.15719566, 0.3734115, -0.5263189, -0.32824618, 0.4996626, 0.47664148, -0.0068885577, 0.053105574, 0.8750009, 0.32470253, -0.15454252, -0.5908538, 0.4658794, -0.09727988, -0.7823577, -0.39818847, -0.3876489, -0.49817133, 0.31564978, -0.30067965, -0.58799505, -0.38890144)
 
 [node name="Root" type="Node3D" unique_id=994739084]
 script = ExtResource("1_pyidc")
 
 [node name="Scene" type="Node3D" parent="." unique_id=535619750]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Scene" unique_id=741239868]
+[node name="Floor" type="CSGBox3D" parent="Scene" unique_id=741239868]
 use_collision = true
-size = Vector3(30, 0.060546875, 30)
+size = Vector3(10, 1, 10)
+material = SubResource("StandardMaterial3D_pyidc")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Scene" unique_id=135041864]
+transform = Transform3D(2.2649371e-07, 0, -3, 0, 3, 0, 3, 0, 2.2649371e-07, -1.5, -2.5, -6.5)
+polygon = PackedVector2Array(-2.5, 0, 0, 0.5, 0.5, 1, 0.5, 0)
+material = SubResource("StandardMaterial3D_jr2fm")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="Scene" unique_id=215725007]
+transform = Transform3D(27, 0, 0, 0, 1, 0, 0, 0, 27, -4, -3.5, -30)
+material = SubResource("StandardMaterial3D_tw3kd")
+
+[node name="CSGPolygon3D8" type="CSGPolygon3D" parent="Scene" unique_id=689977137]
+transform = Transform3D(8, 0, 0, 0, 1, 0, 0, 0, 8, -4, -3.5, -14)
+material = SubResource("StandardMaterial3D_4kqy0")
+
+[node name="CSGPolygon3D6" type="CSGPolygon3D" parent="Scene" unique_id=690337640]
+transform = Transform3D(6, 0, 0, 0, 1, 0, 0, 0, 6, -16, -3.5, -27)
+material = SubResource("StandardMaterial3D_huihk")
+
+[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="Scene" unique_id=1582731870]
+transform = Transform3D(8, 0, 0, 0, 1, 0, 0, 0, 2, -12, -3.5, -17)
+material = SubResource("StandardMaterial3D_bf3um")
+
+[node name="CSGPolygon3D7" type="CSGPolygon3D" parent="Scene" unique_id=280677500]
+transform = Transform3D(-6, 0, -2.7818132e-08, 0, 1, 0, 8.3454395e-08, 0, -2, -4, -3.5, -32)
+material = SubResource("StandardMaterial3D_bf3um")
+
+[node name="CSGPolygon3D9" type="CSGPolygon3D" parent="Scene" unique_id=1764509541]
+transform = Transform3D(2.3841858e-07, 0, 2, 0, 1, 0, -8, 0, 5.9604645e-08, 1, -3.5, -22)
+material = SubResource("StandardMaterial3D_bf3um")
+
+[node name="CSGPolygon3D4" type="CSGPolygon3D" parent="Scene" unique_id=194858347]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, -14, -3.5, -17)
+material = SubResource("StandardMaterial3D_bf3um")
+
+[node name="CSGPolygon3D5" type="CSGPolygon3D" parent="Scene" unique_id=2031567542]
+transform = Transform3D(-3.496911e-07, 0, 2, 0, 1, 0, -8, 0, -8.742278e-08, -12, -3.5, -19)
+material = SubResource("StandardMaterial3D_bf3um")
 
 [node name="XROrigin3D" parent="." unique_id=747606296 instance=ExtResource("1_pq8q7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="Enemy" type="CharacterBody3D" parent="." unique_id=439314632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("8_bf3um")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemy" unique_id=1335033106]
+mesh = SubResource("CapsuleMesh_jr2fm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy" unique_id=427322298]
+shape = SubResource("ConvexPolygonShape3D_huihk")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy" unique_id=1489454766]
