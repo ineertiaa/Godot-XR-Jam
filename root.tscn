@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://x3li24olu835"]
+
+[ext_resource type="PackedScene" uid="uid://c1m7poieklk0l" path="res://xr_origin_3d.tscn" id="1_pq8q7"]
+[ext_resource type="Script" uid="uid://djbyq4hgv42x" path="res://root.gd" id="1_pyidc"]
+
+[node name="Root" type="Node3D" unique_id=994739084]
+script = ExtResource("1_pyidc")
+
+[node name="Scene" type="Node3D" parent="." unique_id=535619750]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Scene" unique_id=741239868]
+use_collision = true
+size = Vector3(30, 0.060546875, 30)
+
+[node name="XROrigin3D" parent="." unique_id=747606296 instance=ExtResource("1_pq8q7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
