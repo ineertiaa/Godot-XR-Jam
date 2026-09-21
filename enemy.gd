@@ -9,7 +9,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	set_target($"../XROrigin3D")
+	set_target($"../XROrigin3D".position)
 
 	var goto = navmesh.get_next_path_position()
 	var current_location = global_transform.origin
