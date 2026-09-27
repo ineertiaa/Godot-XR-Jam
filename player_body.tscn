@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dfa2mi8l8s8te"]
+
+[ext_resource type="Script" uid="uid://cnj4xtjdt3meo" path="res://player_body.gd" id="1_bvaq7"]
+[ext_resource type="PackedScene" uid="uid://c1m7poieklk0l" path="res://xr_origin_3d.tscn" id="2_2lce7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jr2fm"]
+
+[node name="PlayerBody" type="CharacterBody3D" unique_id=1068786675]
+script = ExtResource("1_bvaq7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=771135361]
+shape = SubResource("CapsuleShape3D_jr2fm")
+
+[node name="XROrigin3D" parent="." unique_id=747606296 instance=ExtResource("2_2lce7")]

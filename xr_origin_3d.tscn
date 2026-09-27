@@ -1,15 +1,70 @@
 [gd_scene format=3 uid="uid://c1m7poieklk0l"]
 
+[ext_resource type="Shader" uid="uid://bohxnyarwoe7b" path="res://vignette.gdshader" id="1_u055a"]
 [ext_resource type="PackedScene" uid="uid://bq86r4yll8po" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_fullglove_low.tscn" id="1_yu5ic"]
 [ext_resource type="PackedScene" uid="uid://xqimcf20s2jp" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_fullglove_low.tscn" id="2_ojcpv"]
+[ext_resource type="Script" uid="uid://ifaa4gesyj22" path="res://gun.gd" id="3_2nlyf"]
+[ext_resource type="PackedScene" uid="uid://hgcv76fs5wn5" path="res://bullet.tscn" id="4_rhvbn"]
+[ext_resource type="ArrayMesh" uid="uid://pmbjh0rnkb3j" path="res://model.obj" id="5_rhvbn"]
+[ext_resource type="Texture2D" uid="uid://ves7nrb7s12l" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_orange_512x512.png" id="6_i8lb1"]
+[ext_resource type="Texture2D" uid="uid://dvitlnotr17rl" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_black_512x512.png" id="7_o2y4m"]
+[ext_resource type="Texture2D" uid="uid://c5h0aa0uv3qvf" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_white_512x512.png" id="8_nkf4f"]
+[ext_resource type="Texture2D" uid="uid://b8kpx5tyxrtnw" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_red_512x512.png" id="9_u055a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jr2fm"]
+shader = ExtResource("1_u055a")
+shader_parameter/alpha = 0.0
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_huihk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tw3kd"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qxkev"]
+albedo_texture = ExtResource("6_i8lb1")
+uv1_scale = Vector3(20, 20, 20)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i8lb1"]
+albedo_texture = ExtResource("7_o2y4m")
+uv1_scale = Vector3(13.53, 13.53, 13.53)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nkf4f"]
+albedo_texture = ExtResource("8_nkf4f")
+uv1_scale = Vector3(24.83, 24.83, 24.83)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u055a"]
+albedo_texture = ExtResource("9_u055a")
+uv1_scale = Vector3(10.78, 10.78, 10.78)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kmt6x"]
+albedo_color = Color(0.6052743, 0.6052743, 0.6052743, 1)
+albedo_texture = ExtResource("6_i8lb1")
+uv1_scale = Vector3(34.745, 34.745, 34.745)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
 [node name="XROrigin3D" type="XROrigin3D" unique_id=747606296]
 
 [node name="XRCamera3D" type="XRCamera3D" parent="." unique_id=1743096736]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="XRCamera3D" unique_id=671195069]
+
+[node name="ColorRect" type="ColorRect" parent="XRCamera3D/CanvasLayer" unique_id=1735699268]
+material = SubResource("ShaderMaterial_jr2fm")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="L_Hand" type="XRController3D" parent="." unique_id=584546989]
 tracker = &"left_hand"
@@ -22,3 +77,26 @@ tracker = &"right_hand"
 
 [node name="RightHand" parent="R_Hand" unique_id=1945487281 instance=ExtResource("2_ojcpv")]
 hand_material_override = SubResource("StandardMaterial3D_tw3kd")
+
+[node name="Gun" type="Node3D" parent="R_Hand" unique_id=1888564890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.018676281, 0, 0.0017100573)
+script = ExtResource("3_2nlyf")
+bullet = ExtResource("4_rhvbn")
+
+[node name="Model" type="MeshInstance3D" parent="R_Hand/Gun" unique_id=1770820410]
+transform = Transform3D(-0.70710677, 0, 0.70710677, 0.1830127, 0.9659258, 0.1830127, -0.68301266, 0.25881904, -0.68301266, -0.037319917, 0.024277762, -0.038487934)
+mesh = ExtResource("5_rhvbn")
+surface_material_override/0 = SubResource("StandardMaterial3D_qxkev")
+surface_material_override/1 = SubResource("StandardMaterial3D_i8lb1")
+surface_material_override/2 = SubResource("StandardMaterial3D_nkf4f")
+surface_material_override/3 = SubResource("StandardMaterial3D_u055a")
+surface_material_override/4 = SubResource("StandardMaterial3D_kmt6x")
+
+[node name="Tip" type="Node3D" parent="R_Hand/Gun" unique_id=1782597077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.037262887, 0.056070395, -0.19988322)
+
+[node name="GunCooldown" type="Timer" parent="R_Hand/Gun" unique_id=1693935977]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="R_Hand/Gun/GunCooldown" to="R_Hand/Gun" method="_on_gun_cooldown_timeout"]

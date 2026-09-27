@@ -1,23 +1,56 @@
-extends CharacterBody3D
+extends RigidBody3D
 
-@onready var navmesh = $NavigationAgent3D
+@onready var player = $"../../PlayerBody"
 
-const speed = 5.0
-const jump_vel = 4.5
+var bounce_tween: Tween
+
+var squish_divide = 2
+
+@onready var normal_scale = global_transform.basis.get_scale()
+
+signal on_enemy_died(enemy: Node3D)
+
+const maxHealth = 100
+var currentHealth = maxHealth
+
+var speed = 5.0
+var sight_range = 50.0
+
+var can_attack = true
 
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	set_target($"../XROrigin3D".position)
-
-	var goto = navmesh.get_next_path_position()
-	var current_location = global_transform.origin
-	var new_vel = (goto - current_location).normalized() * speed
+	var dist_to_player = global_position.distance_to(player.position)
 	
-	velocity = velocity.move_toward(new_vel, 0.25)
-
-	move_and_slide()
+	if (can_attack and dist_to_player < sight_range):
+		attack()
+		
 	
-func set_target(target):
-	navmesh.target_position = target
+
+func attack() -> void:
+	can_attack = false
+	$AttackCooldown.start()
+	
+	var player_dir = (player.global_position - global_position).normalized()
+	
+	if (bounce_tween):
+		bounce_tween.kill()
+		
+	bounce_tween = create_tween()
+	bounce_tween.tween_property($MeshInstance3D, "scale", Vector3(normal_scale.x, normal_scale.y / squish_divide, normal_scale.z), 0.1)
+	bounce_tween.tween_property($MeshInstance3D, "scale", normal_scale, 0.1)
+	
+	apply_impulse(player_dir * 10.0)
+
+func _on_attack_cooldown_timeout() -> void:
+	can_attack = true
+	
+func enemy_take_damage(damage) -> void:
+	currentHealth -= damage
+	
+	if (currentHealth <= 0):
+		on_enemy_died.emit(self)
+		queue_free()
+		
+	apply_impulse(-get_global_transform().basis.z * 10.0)
+		
+	print(currentHealth)

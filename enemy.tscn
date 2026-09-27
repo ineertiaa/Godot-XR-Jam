@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://bphntocqr3hqc"]
+
+[ext_resource type="Script" uid="uid://4wv54t0qbbfi" path="res://enemy.gd" id="1_7k104"]
+[ext_resource type="Script" uid="uid://duwkpg48xw62j" path="res://enemy_dmg.gd" id="2_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://b8kpx5tyxrtnw" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_red_512x512.png" id="2_qi2p4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_28aoi"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jr2fm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qw60f"]
+albedo_texture = ExtResource("2_qi2p4")
+emission_enabled = true
+emission = Color(0.47385716, 0.0038129482, 1.2032687e-07, 1)
+emission_energy_multiplier = 30.0
+uv1_triplanar = true
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_huihk"]
+points = PackedVector3Array(-0.12520654, -0.532801, -0.4805069, 0.022783129, 0.4760704, 0.49888408, 0.16971254, 0.5591441, 0.46417162, 0.23105091, -0.8035912, 0.32045516, 0.40741014, 0.651043, -0.24352328, -0.4827893, 0.59484255, 0.082213186, -0.3628679, -0.68231165, 0.2896967, 0.46904355, -0.65452886, -0.06627126, -0.12744367, 0.8427015, -0.33810276, -0.39343542, -0.6839421, -0.24471663, 0.43825462, 0.62330925, 0.20084947, 0.0841477, 0.977454, 0.11479468, -0.06820232, -0.9764576, -0.12927033, 0.20054972, -0.56312895, -0.4514544, -0.18552664, 0.59545326, -0.4534751, -0.27336287, 0.59226835, 0.40775412, -0.0069364863, -0.47682306, 0.49966025, 0.37582088, -0.5886136, 0.31695515, 0.111579016, 0.5630594, -0.48117727, -0.41725034, 0.5278656, -0.27049688, -0.48454633, -0.59697217, -0.06650971, -0.27974695, 0.90856135, 0.05333608, -0.25019687, -0.8807117, 0.20531891, 0.263647, -0.90277094, -0.1273943, 0.29336792, 0.8715263, -0.15719566, 0.3734115, -0.5263189, -0.32824618, 0.4996626, 0.47664148, -0.0068885577, 0.053105574, 0.8750009, 0.32470253, -0.15454252, -0.5908538, 0.4658794, -0.09727988, -0.7823577, -0.39818847, -0.3876489, -0.49817133, 0.31564978, -0.30067965, -0.58799505, -0.38890144)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jr2fm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jr2fm"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 2.22
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qi2p4"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission_energy_multiplier = 6.85
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4kqy0"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.06469653, 0.06469653, 0.06469653, 1)
+emission_energy_multiplier = 0.0
+
+[node name="Enemy" type="RigidBody3D" unique_id=573829294]
+physics_material_override = SubResource("PhysicsMaterial_28aoi")
+gravity_scale = 0.0
+script = ExtResource("1_7k104")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1404406670]
+mesh = SubResource("CapsuleMesh_jr2fm")
+surface_material_override/0 = SubResource("StandardMaterial3D_qw60f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=812175787]
+shape = SubResource("ConvexPolygonShape3D_huihk")
+
+[node name="AttackCooldown" type="Timer" parent="." unique_id=433350699]
+wait_time = 3.0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1780097235]
+script = ExtResource("2_4gyqm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1284525600]
+shape = SubResource("CapsuleShape3D_jr2fm")
+
+[node name="Eye1" type="CSGSphere3D" parent="." unique_id=1950579249]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.5, 0.5, 0.15)
+radius = 1.0
+material = SubResource("StandardMaterial3D_jr2fm")
+
+[node name="Pupil" type="CSGSphere3D" parent="Eye1" unique_id=625790460]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.68820477, 0, 0)
+radius = 1.0
+material = SubResource("StandardMaterial3D_qi2p4")
+
+[node name="Eye2" type="CSGSphere3D" parent="." unique_id=1568984882]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.5, 0.5, -0.15)
+radius = 1.0
+material = SubResource("StandardMaterial3D_jr2fm")
+
+[node name="Pupil" type="CSGSphere3D" parent="Eye2" unique_id=832576622]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.68820477, 0, 0)
+radius = 1.0
+material = SubResource("StandardMaterial3D_qi2p4")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1748988153]
+transform = Transform3D(0.09, 0, 0, 0, 0.0859674, 0.069622315, 0, -0.023034893, 0.25983405, 0.5, 0.6583442, 0.15855926)
+material = SubResource("StandardMaterial3D_4kqy0")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=613249295]
+transform = Transform3D(0.09, 0, 0, 0, 0.0859674, -0.06962232, 0, 0.023034895, 0.25983405, 0.5, 0.658, -0.159)
+material = SubResource("StandardMaterial3D_4kqy0")
+
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
